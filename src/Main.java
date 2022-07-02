@@ -64,6 +64,7 @@ public class Main {
             case "*" -> result = left * right;
             case "/" -> result = left / right;
         }
+
         return Integer.toString(result);
 
     }
