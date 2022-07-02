@@ -5,27 +5,26 @@ public class Main {
         Scanner in = new Scanner(System.in);
         String st = in.nextLine();
         in.close();
-        String res = calc(st);
-//        System.out.println(res);
+        System.out.println(calc(st));
         }
-    public static String calc(String input) {
+    public static String calc(String input) throws ArithmeticException {
+        String result = "";
 
         String[] words = input.split("\\+");
-        if (words.length == 2) check(words[0], "+", words[1]);
+        if (words.length == 2) result = check(words[0], "+", words[1]);
         String[] words1 = input.split("-");
-        if (words1.length == 2) check(words1[0], "-", words1[1]);
+        if (words1.length == 2) result = check(words1[0], "-", words1[1]);
         String[] words2 = input.split("\\*");
-        if (words2.length == 2) check(words2[0], "*", words2[1]);
+        if (words2.length == 2) result = check(words2[0], "*", words2[1]);
         String[] words3 = input.split("/");
-        if (words3.length == 2) check(words3[0], "/", words3[1]);
+        if (words3.length == 2) result = check(words3[0], "/", words3[1]);
 
-//        for(String word : words)
-//            System.out.println(word);
+        if (result == "") throw new ArithmeticException();
 
-        return input;
+        return result;
     }
 
-    public static void check(String left, String op, String right) {
+    public static String check(String left, String op, String right) throws ArithmeticException {
         boolean le_str = false;
         boolean ri_str = false;
         int le = 0;
@@ -47,29 +46,28 @@ public class Main {
         if (le_str && ri_str) {
             res = calculate(romeToInt(left), op, romeToInt(right));
             res = intToRome(res);
-
         }
-        if (!le_str && !ri_str) res = calculate(le, op, ri);
-//        System.out.println("Error different");
-        System.out.println(res);
+        else if (!le_str && !ri_str) res = calculate(le, op, ri);
+        else throw new ArithmeticException();
 
+        return res;
     }
 
-    public static String calculate(int left, String op, int right) {
+    public static String calculate(int left, String op, int right) throws ArithmeticException {
         int result = 0;
 
-        if (left > 10 || left < 1 || right > 10 || right < 1) System.out.println("Числа вне диап");
+        if (left > 10 || left < 1 || right > 10 || right < 1) throw new ArithmeticException();
+
         switch (op) {
             case "+" -> result = left + right;
             case "-" -> result = left - right;
             case "*" -> result = left * right;
             case "/" -> result = left / right;
-            default -> System.out.println("не выбран ни один из пунктов меню");
         }
         return Integer.toString(result);
 
     }
-    public static int romeToInt(String rome) {
+    public static int romeToInt(String rome) throws ArithmeticException {
         int num = 0;
 
         switch (rome.toUpperCase().strip()) {
@@ -83,16 +81,16 @@ public class Main {
             case "VIII" -> num = 8;
             case "IX" -> num = 9;
             case "X" -> num = 10;
-            default -> System.out.println("не выбран ни один из пунктов меню");
+            default -> throw new ArithmeticException();
         }
 
         return num;
 
     }
-    public static String intToRome(String st) {
+    public static String intToRome(String st) throws ArithmeticException {
         String res = "";
         int num = Integer.parseInt(st);
-        if (num <= 0) System.out.println("Отрицат Римские");
+        if (num <= 0) throw new ArithmeticException();
         if (num == 100) return "C";
         int dec = num / 10;
         int ed = num % 10;
@@ -108,7 +106,6 @@ public class Main {
             case 7 -> res = "LXX";
             case 8 -> res = "LXXX";
             case 9 -> res = "XC";
-            default -> System.out.println("не выбран ни один из пунктов меню");
         }
         switch (ed) {
             case 0 -> res += "";
@@ -121,10 +118,7 @@ public class Main {
             case 7 -> res += "VII";
             case 8 -> res += "VIII";
             case 9 -> res += "IX";
-            default -> System.out.println("не выбран ни один из пунктов меню");
         }
-
         return res;
-
     }
 }
