@@ -7,6 +7,7 @@ public class Main {
         in.close();
         System.out.println(calc(st));
         }
+
     public static String calc(String input) throws ArithmeticException {
         String result = "";
 
@@ -64,10 +65,9 @@ public class Main {
             case "*" -> result = left * right;
             case "/" -> result = left / right;
         }
-
         return Integer.toString(result);
-
     }
+
     public static int romeToInt(String rome) throws ArithmeticException {
         int num = 0;
 
@@ -84,10 +84,9 @@ public class Main {
             case "X" -> num = 10;
             default -> throw new ArithmeticException();
         }
-
         return num;
-
     }
+
     public static String intToRome(String st) throws ArithmeticException {
         String res = "";
         int num = Integer.parseInt(st);
